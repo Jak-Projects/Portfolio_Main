@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>10 Minute Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: transparent;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+            transition: background-image 1s ease-in-out;
+        }
+/*layout main */
+        .main {
+            width: 90%;
+            max-width: 1200px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.9);
+            min-height: 80vh;
+            z-index: 1;
+            position: relative;
+        }
+
+        .businessman {  
+            position: absolute;
+            top: 0;
+            right: 20px;
+            max-width: 250px;
+            z-index: 2;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 10px solid #FF5733;                /*not shrinking with page; media box? */
+        }
+
+        .businessman:hover {
+            transform: scale(1.2);      
+            box-shadow: 0 0 30px 10px rgba(255, 87, 51, 0.8); /* hoever effect on prof pic */ 
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+            z-index: 3;
+            user-select: none;
+            transform: translateY(-50%);
+        }
+
+        .left-arrow {
+            left: 10px;
+        }
+
+        .right-arrow {
+            right: 10px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        } /* semi flux container, no conductor, no container, note to self try with profile pic "business man" */ 
+
+        .logo-container {
+            flex: 1;
+        }
+
+        .logo {
+            width: 100px;
+        }
+
+        .nav-container {
+            flex: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .links-box ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        .links-box ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .links-box ul li a:hover {
+            color: #007BFF;
+        }
+
+        .top-right-options a {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            margin-left: 10px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .top-right-options a:hover {
+            background-color: #0056b3;
+            box-shadow: 0 0 20px 10px rgba(0, 123, 255, 0.8),
+                        0 0 40px 20px rgba(34, 139, 34);
+        }
+
+        .info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .info p {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .text-box {
+            background-color: rgba(17, 99, 30, 0.85);
+            border: 2px solid #000;
+            padding: 20px;
+            color: #fff;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 80%;
+            height: 300px;
+            overflow: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-family: "Courier New", Courier, monospace;
+            font-size: 1.5rem;        /*manual overide below, line 164 */ 
+            line-height: 1.6;
+            letter-spacing: 0.05rem;
+        }
+
+        .text-box p {
+            font-size: 1.6rem; /* temporary solution, forcing white text > !important */ 
+			color: #fff;
+        }
+
+        .text-box::-webkit-scrollbar {            /*scrollbar settings*/
+            width: 8px;
+        }
+
+        .text-box::-webkit-scrollbar-track {
+            background: #333;
+        }
+
+        .text-box::-webkit-scrollbar-thumb {
+            background-color: #2ecc71;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {                       /*media fixes for smaller screen resoluations, todo needs work */
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .logo {
+                width: 80px;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .links-box ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .info h1 {
+                font-size: 2rem;
+            }
+
+            .top-right-options {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .text-box {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="arrow left-arrow" onclick="prevImage()">&#9664;</div>  <!-- transition background images in array -->
+    <div class="arrow right-arrow" onclick="nextImage()">&#9654;</div>
+
+    <img src="https://i.imgur.com/Dqyeb9y.png" class="businessman" alt="Profile Image">  <!-- Businessman doesn't shrink minimized, needs fix, unsure how-->
+
+    <div class="main">
+        <nav>
+            <div class="logo-container">
+                <img src="https://i.imgur.com/c5pDJWI.png" class="logo" alt="customLogo_CIS">
+            </div>
+            <div class="nav-container">
+                <div class="links-box">
+                    <ul>
+                        <li><a href="https://jak-projects.github.io/Jak-Project.Github.io/" target="_blank"><strong class="styled-text">Card</strong></a></li>  <!-- target="_blank" super neat trick-->
+                        <li><a href="https://jak-projects.github.io/Jak-Project.Github.io/" target="_blank"><strong class="styled-text">Education</strong></a></li>
+                        <li><a href="https://jak-projects.github.io/Jak-Project.Github.io/" target="_blank"><strong class="styled-text">Services</strong></a></li>
+                        <li><a href="https://jak-projects.github.io/Jak-Project.Github.io/" target="_blank"><strong class="styled-text">Portfolio</strong></a></li>
+                        <li><a href="https://jak-projects.github.io/Jak-Project.Github.io/" target="_blank"><strong class="styled-text">Contact</strong></a></li>
+                    </ul>
+                </div>
+                <div class="top-right-options">
+                    <a href="https://jak-projects.github.io/Jak-Project.Github.io/" class="login-btn">LinkedIn</a>  <!-- using as links to linkedin etc>website now -->
+                    <a href="https://jak-projects.github.io/Jak-Project.Github.io/" class="download-btn">Resume</a>       <!-- links will be updated when project is finished for now it'll all go to my business card on GitPages-->
+                </div>
+            </div>
+        </nav>
+
+		<div class="info">
+    <h1>𝔹𝕣𝕒𝕕𝕝𝕖𝕪 𝕁𝕒𝕜𝕦𝕓𝕖𝕜, 𝔹.𝕊𝕔 (𝕎𝕀ℙ). 𝔸𝕡𝕡𝕝𝕚𝕖𝕕 𝔹𝕦𝕤𝕚𝕟𝕖𝕤𝕤 𝕀𝕟𝕗𝕠𝕣𝕞𝕒𝕥𝕚𝕠𝕟 𝕊𝕪𝕤𝕥𝕖𝕞𝕤<br><br></h1>
+    <div style="font-family: monospace; white-space: pre; font-size: 1rem; overflow-x: auto;"> <!-- need practice with ascii art, good enough for now -->
+
+███╗░░░███╗░█████╗░██╗███╗░░██╗  ██████╗░░█████╗░░██████╗░███████╗
+████╗░████║██╔══██╗██║████╗░██║  ██╔══██╗██╔══██╗██╔════╝░██╔════╝
+██╔████╔██║███████║██║██╔██╗██║  ██████╔╝███████║██║░░██╗░█████╗░░
+██║╚██╔╝██║██╔══██║██║██║╚████║  ██╔═══╝░██╔══██║██║░░╚██╗██╔══╝░░
+██║░╚═╝░██║██║░░██║██║██║░╚███║  ██║░░░░░██║░░██║╚██████╔╝███████╗
+╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝╚═╝░░╚══╝  ╚═╝░░░░░╚═╝░░╚═╝░╚═════╝░╚══════╝
+    </div>
+
+            <div class="text-box">
+                <p>//Testpage//<br>Skills include:</p>
+                <p>
+                   ✁Lorem ipsum odor amet, consectetuer adipiscing elit. Primis massa a<br>
+                   ✁Lorem ipsum odor amet, consectetuer adipiscing elit. Primis massa a<br>
+                   ✁Lorem ipsum odor amet, consectetuer adipiscing elit. Primis massa a<br>
+                   ✁Lorem ipsum odor amet, consectetuer adipiscing elit. Primis massa a<br>
+                   ✁Lorem ipsum odor amet, consectetuer adipiscing elit. Primis massa a<br>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            const images = [
+                'https://i.imgur.com/Mw8o0GP.png',   
+                'https://i.imgur.com/cXCbe8A.png',
+                'https://i.imgur.com/qSbixgS.png'    //array of images todo make work with darkreader plugin       
+            ];
+
+            let currentImageIndex = 0;
+            const body = document.body;
+
+            body.style.backgroundImage = `url(${images[0]})`;
+
+            images.forEach((src) => {
+                const img = new Image();
+                img.src = src;
+            });
+
+            function changeBackgroundImage(index) {
+                body.style.backgroundImage = `url(${images[index]})`;
+            }
+
+            function nextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                changeBackgroundImage(currentImageIndex);
+            }
+
+            function prevImage() {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                changeBackgroundImage(currentImageIndex);
+            }
+
+            setInterval(nextImage, 15000);  //15000 ticks = 15 seconds (miliseconds clock) Note to future self: DONOT set intervals below 0.000X whoops
+
+            document.querySelector('.right-arrow').onclick = nextImage;
+            document.querySelector('.left-arrow').onclick = prevImage;
+
+            changeBackgroundImage(currentImageIndex);
+        }
+    </script>
+</body>
+</html>
